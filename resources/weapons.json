@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "name": "Hero Sword",
+    "description": "Legendary sword that increases attack power.",
+    "price": 500,
+    "required_level": 3,
+    "attack": 25,
+    "critical_chance": 0.15,
+    "durability": 100,
+    "quantity": 1
+  }
+]

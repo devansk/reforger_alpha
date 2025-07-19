@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "name": "Guardian Shield",
+    "description": "A solid shield providing high protection.",
+    "price": 350,
+    "required_level": 2,
+    "defense": 20,
+    "hp": 50,
+    "durability": 100,
+    "quantity": 1
+  }
+]

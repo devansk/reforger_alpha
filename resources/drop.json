@@ -1,0 +1,28 @@
+[
+  {
+    "id": 1,
+    "name": "[s] Health Potion",
+    "description": "A small health potion. (+15HP)",
+    "price": 5,
+    "required_level": 1,
+    "hp": 15,
+    "durability": 1,
+    "quantity": 1
+  },
+  {
+    "id": 2,
+    "name": "[s] Purse of money",
+    "description": "A small leathar purse of money. (+25 gold)",
+    "price": 25,
+    "required_level": 1,
+    "quantity": 1
+  },
+  {
+    "id": 3,
+    "name": "Rabbit Leather ",
+    "description": "Rabbit leather of questionable quality",
+    "price": 50,
+    "required_level": 1,
+    "quantity": 1
+  }
+]

@@ -1,0 +1,15 @@
+[
+  {
+    "id": 1,
+    "name": "Friendly Rabbit",
+    "description": "A small, gentle creature that hops around happily.",
+    "xp": 1,
+    "level": 1,
+    "defense": 3,
+    "hp": 20,
+    "attack": 2,
+    "drop": [1,2,3],
+    "d_chance": 50
+  }
+
+]

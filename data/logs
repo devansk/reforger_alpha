@@ -1,0 +1,9 @@
+
+[Player][22:13][19.07.2025] - Player Hero created with 150 health, level 1, and 200 balance.
+[Monster][22:13][19.07.2025] - Monster found by id 1: Friendly Rabbit
+[Monster][22:13][19.07.2025] - Friendly Rabbit get killed by Hero in 5 hit(s)
+[General][22:13][19.07.2025] - Hero get +1xp | [1/100]
+[Monster][22:13][19.07.2025] - Item drops from Friendly Rabbit
+[Player][22:13][19.07.2025] - Item(id=2, name='[s] Purse of money') added to inventory
+[Monster][22:13][19.07.2025] - Item drops from Friendly Rabbit
+[Player][22:13][19.07.2025] - Item(id=3, name='Rabbit Leather ') added to inventory
