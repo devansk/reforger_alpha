@@ -10,13 +10,13 @@ import sys
 #Reforger alpha
 
 #@@IN-PROGRESS@@
-# - damage calculation
+# - damage calculation [działa]
 # - saving system
 # - eq system
-# - inventory system
-# - monster class
-# - drop system
-# - battle system
+# - inventory system 
+# - monster class [działa]
+# - drop system [działa - dodać drop chance do itemow]
+# - battle system [prymitywnie kurwa]
 # - quest system
 # - shop
 # - durability system
@@ -24,7 +24,7 @@ import sys
 # ***MAP***
 # ***GATHERING SYSTEM***
 # ***CRAFTING SYSTEM***
-# ***LOG SYSTEM***
+# ***LOG SYSTEM*** [działa]
 
 
 
@@ -33,8 +33,12 @@ log.log("Game started", 0)
 
 if __name__ == "__main__":
     # Example usage of Player class
-    player = Player(name="Hero", health=150, level=1, experience=0, balance=200)
+    #player = Player(name="Hero", health=150, level=1, experience=0, balance=200)
+    player = Player.load_from_file()
+
     
+
+
     # # Display player information
     # log.log(f"Player Name: {player.get_name()}",9)
     # log.log(f"Health: {player.get_health()}",9)
@@ -75,4 +79,5 @@ if __name__ == "__main__":
 
     walka_pierwsza = Fight(player,potworek_1)
     walka_pierwsza.walka()
-
+    player.save_to_file()
+    

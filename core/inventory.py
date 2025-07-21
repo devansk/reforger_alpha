@@ -1,3 +1,9 @@
+    # @classmethod
+    # def from_dict(cls, data):
+    #     obj = cls()
+    #     for key, value in data.items():
+    #         setattr(obj, key, value)
+    #     return obj
 from core.items import Items
 import sys
 import os
@@ -9,6 +15,12 @@ itemz_list = Items()
 itemz_list.load_drop()
 
 class Inventory:
+    @classmethod
+    def from_dict(cls, data):
+        obj = cls()
+        for key, value in data.items():
+            setattr(obj, key, value)
+        return obj
     def __init__(self):
         self.items = []
 
@@ -26,5 +38,25 @@ class Inventory:
 
     def clear_inventory(self):
         self.items.clear()
+
+    def to_dict(self):
+        result = {}
+        for key, value in self.__dict__.items():
+            if isinstance(value, list):
+                result[key] = []
+                for item in value:
+                    if hasattr(item, 'to_dict'):
+                        result[key].append(item.to_dict())
+                    elif hasattr(item, '__dict__'):
+                        result[key].append(item.__dict__)
+                    else:
+                        result[key].append(item)
+            elif hasattr(value, 'to_dict'):
+                result[key] = value.to_dict()
+            elif hasattr(value, '__dict__'):
+                result[key] = value.__dict__
+            else:
+                result[key] = value
+        return result
 
 eq = Inventory()

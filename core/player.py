@@ -22,7 +22,103 @@ from log_system import log
 
 
 class Player:
-    def __init__(self, name="Steve", health=100, level=1, experience=0, experience_need=100, balance=0, attack=10, defense=5, critical_hit_chance=0.1):
+    @classmethod
+    def load_from_file(cls, player_file='data/player_save.json', inventory_file='data/player_inventory.json'):
+        import json, os
+        # Wczytaj dane gracza
+        if os.path.exists(player_file):
+            with open(player_file, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+        else:
+            data = {}
+        # Wczytaj inventory
+        from core.inventory import Inventory
+        if os.path.exists(inventory_file):
+            with open(inventory_file, 'r', encoding='utf-8') as f:
+                inventory_data = json.load(f)
+            inventory = Inventory.from_dict(inventory_data)
+        else:
+            inventory = Inventory()
+        return cls(
+            name=data.get('name', "Steve"),
+            health=data.get('health', 100),
+            level=data.get('level', 1),
+            experience=data.get('experience', 0),
+            experience_need=data.get('experience_need', 100),
+            balance=data.get('balance', 0),
+            attack=data.get('attack', 10),
+            defense=data.get('defense', 5),
+            critical_hit_chance=data.get('critical_hit_chance', 0.1),
+            inventory=inventory
+        )
+    def save_to_file(self, filename='data/player_save.json'):
+        import json
+        import os
+        os.makedirs(os.path.dirname(filename), exist_ok=True)
+        data = {
+            'name': self.name,
+            'health': self.health,
+            'health_max': self.health_max,
+            'level': self.level,
+            'experience': self.experience,
+            'experience_need': self.experience_need,
+            'balance': self.balance,
+            'attack': self.attack,
+            'defense': self.defense,
+            'damage': self.damage,
+            'critical_hit_chance': self.critical_hit_chance
+        }
+        with open(filename, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
+        # Save inventory to a separate file
+        inventory_file = 'data/player_inventory.json'
+        os.makedirs(os.path.dirname(inventory_file), exist_ok=True)
+        if hasattr(self.inventory, 'to_dict'):
+            inventory_data = self.inventory.to_dict()
+        elif hasattr(self.inventory, '__dict__'):
+            inventory_data = self.inventory.__dict__
+        else:
+            inventory_data = str(self.inventory)
+        # Dopisz nowe itemy do istniejącego pliku inventory
+        try:
+            if os.path.exists(inventory_file):
+                with open(inventory_file, 'r', encoding='utf-8') as f:
+                    existing_data = json.load(f)
+            else:
+                existing_data = {}
+            # Zakładamy, że inventory_data to dict z kluczem 'items' będącym listą
+            if 'items' in existing_data and 'items' in inventory_data:
+                # Dodaj nowe itemy do istniejącej listy
+                existing_data['items'].extend(inventory_data['items'])
+            else:
+                existing_data = inventory_data
+            with open(inventory_file, 'w', encoding='utf-8') as f:
+                json.dump(existing_data, f, ensure_ascii=False, indent=4)
+        except Exception as e:
+            log.log(f"Inventory append error: {e}", 1)
+        log.log(f"Player state saved to {filename} and inventory appended to {inventory_file}", 1)
+
+    # def load_from_file(self, filename='data/player_save.json'):
+    #     import json
+    #     import os
+    #     if not os.path.exists(filename):
+    #         log.log(f"Save file {filename} not found.", 1)
+    #         return
+    #     with open(filename, 'r', encoding='utf-8') as f:
+    #         data = json.load(f)
+    #     self.name = data.get('name', self.name)
+    #     self.health = data.get('health', self.health)
+    #     self.health_max = data.get('health_max', self.health_max)
+    #     self.level = data.get('level', self.level)
+    #     self.experience = data.get('experience', self.experience)
+    #     self.experience_need = data.get('experience_need', self.experience_need)
+    #     self.balance = data.get('balance', self.balance)
+    #     self.attack = data.get('attack', self.attack)
+    #     self.defense = data.get('defense', self.defense)
+    #     self.damage = data.get('damage', self.damage)
+    #     self.critical_hit_chance = data.get('critical_hit_chance', self.critical_hit_chance)
+    #     log.log(f"Player state loaded from {filename}", 1)
+    def __init__(self,inventory = None, name="Steve", health=100, level=1, experience=0, experience_need=100, balance=0, attack=10, defense=5, critical_hit_chance=0.1):
         self.name = name
         self.health = health
         self.health_max = self.health  # Maximum health
