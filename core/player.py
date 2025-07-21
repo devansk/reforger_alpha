@@ -37,9 +37,11 @@ class Player:
             with open(inventory_file, 'r', encoding='utf-8') as f:
                 inventory_data = json.load(f)
             inventory = Inventory.from_dict(inventory_data)
+            # Zapamiętaj oryginalne itemy do późniejszego zapisu
+            cls._loaded_inventory_items = list(inventory_data.get('items', []))
         else:
             inventory = Inventory()
-        log.log(f"Player state loaded from {player_file} and inventory from {inventory_file}", 10)
+            cls._loaded_inventory_items = []
         return cls(
             name=data.get('name', "Steve"),
             health=data.get('health', 100),
@@ -53,9 +55,7 @@ class Player:
             inventory=inventory
         )
     def save_to_file(self, filename='data/player_save.json'):
-        import json
-        import os
-        os.makedirs(os.path.dirname(filename), exist_ok=True)
+        import json, os
         data = {
             'name': self.name,
             'health': self.health,
@@ -68,10 +68,13 @@ class Player:
             'defense': self.defense,
             'damage': self.damage,
             'critical_hit_chance': self.critical_hit_chance
+            
         }
+        os.makedirs(os.path.dirname(filename), exist_ok=True)
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
-        # Save inventory to a separate file
+
+        # Save inventory to a separate file, merging with previous items (no duplicates)
         inventory_file = 'data/player_inventory.json'
         os.makedirs(os.path.dirname(inventory_file), exist_ok=True)
         if hasattr(self.inventory, 'to_dict'):
@@ -80,24 +83,58 @@ class Player:
             inventory_data = self.inventory.__dict__
         else:
             inventory_data = str(self.inventory)
-        # Dopisz nowe itemy do istniejącego pliku inventory
-        try:
-            if os.path.exists(inventory_file):
-                with open(inventory_file, 'r', encoding='utf-8') as f:
-                    existing_data = json.load(f)
+
+        prev_items = getattr(Player, '_loaded_inventory_items', [])
+        new_items = inventory_data.get('items', [])
+        def get_key(item):
+            if isinstance(item, dict):
+                return (item.get('id'), item.get('name'))
             else:
-                existing_data = {}
-            # Zakładamy, że inventory_data to dict z kluczem 'items' będącym listą
-            if 'items' in existing_data and 'items' in inventory_data:
-                # Dodaj nowe itemy do istniejącej listy
-                existing_data['items'].extend(inventory_data['items'])
+                return (getattr(item, 'id', None), getattr(item, 'name', None))
+        prev_keys = {get_key(item) for item in prev_items}
+        # Zlicz tylko nowe przedmioty (nieobecne w prev_items)
+        new_qty = {}
+        new_mqty = {}
+        for item in new_items:
+            key = get_key(item)
+            if key not in prev_keys:
+                qty = item.get('quantity', 1) if isinstance(item, dict) else getattr(item, 'quantity', 1)
+                new_qty[key] = new_qty.get(key, 0) + qty
+                if isinstance(item, dict):
+                    new_mqty[key] = item.get('m_quantity', 1)
+                else:
+                    new_mqty[key] = getattr(item, 'm_quantity', 1)
+
+        # Build dict: key -> item dict (with quantity)
+        merged = {}
+        for item in prev_items:
+            key = get_key(item)
+            if isinstance(item, dict):
+                merged[key] = item.copy()
             else:
-                existing_data = inventory_data
-            with open(inventory_file, 'w', encoding='utf-8') as f:
-                json.dump(existing_data, f, ensure_ascii=False, indent=4)
-        except Exception as e:
-            log.log(f"Inventory append error: {e}", 10)
-        log.log(f"Player state saved to {filename} and inventory appended to {inventory_file}", 10)
+                merged[key] = item.__dict__.copy() if hasattr(item, '__dict__') else dict(item)
+        for key, add_qty in new_qty.items():
+            if key in merged:
+                merged_item = merged[key]
+                prev_qty = merged_item.get('quantity', 1)
+                max_qty = new_mqty.get(key, merged_item.get('m_quantity', 1))
+                merged_item['quantity'] = min(prev_qty + add_qty, max_qty)
+                merged_item['m_quantity'] = max_qty
+            else:
+                # znajdź przykładowy item z new_items o tym kluczu
+                for item in new_items:
+                    if get_key(item) == key:
+                        new_item = item.copy() if isinstance(item, dict) else (item.__dict__.copy() if hasattr(item, '__dict__') else dict(item))
+                        new_item['quantity'] = min(add_qty, new_mqty.get(key, 1))
+                        new_item['m_quantity'] = new_mqty.get(key, 1)
+                        merged[key] = new_item
+                        break
+        combined = list(merged.values())
+        with open(inventory_file, 'w', encoding='utf-8') as f:
+            json.dump({'items': combined}, f, ensure_ascii=False, indent=4)
+        # Update loaded inventory for next save
+        Player._loaded_inventory_items = combined
+        log.log(f"Player state saved to {filename} and inventory merged in {inventory_file}", 1)
 
     # def load_from_file(self, filename='data/player_save.json'):
     #     import json
@@ -119,20 +156,20 @@ class Player:
     #     self.damage = data.get('damage', self.damage)
     #     self.critical_hit_chance = data.get('critical_hit_chance', self.critical_hit_chance)
     #     log.log(f"Player state loaded from {filename}", 1)
-    def __init__(self,inventory = None, name="Steve", health=100, level=1, experience=0, experience_need=100, balance=0, attack=10, defense=5, critical_hit_chance=0.1):
+    def __init__(self, inventory=None, name="Steve", health=100, level=1, experience=0, experience_need=100, balance=0, attack=10, defense=5, critical_hit_chance=0.1):
         self.name = name
         self.health = health
-        self.health_max = self.health  # Maximum health
+        self.health_max = health  # Maximum health
         self.level = level
         self.experience = experience
-        self.experience_need = 100*self.level  # Experience needed for next level
+        self.experience_need = experience_need if experience_need is not None else 100 * self.level  # Experience needed for next level
         self.balance = balance
-        self.inventory = Inventory()
+        self.inventory = inventory if inventory is not None else Inventory()
         self.attack = attack
         self.defense = defense
-        self.damage = int(self.attack*0.75)
-        self.critical_hit_chance = critical_hit_chance 
-        # log.log(f"Player {self.name} created with {self.health} health, level {self.level}, and {self.balance} balance.", 1)  
+        self.damage = int(self.attack * 0.75)
+        self.critical_hit_chance = critical_hit_chance
+        # log.log(f"Player {self.name} created with {self.health} health, level {self.level}, and {self.balance} balance.", 1)
 
     def __str__(self):
         return f"Name: {self.name}\nLevel: {self.level}\nExperience: {self.experience}/{self.experience_need}\nMoney: {self.balance}\nHealth: {self.health}/{self.health_max}\nAttack: {self.attack}\nDefense: {self.defense}\nDamage: {self.damage}"
