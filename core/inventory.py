@@ -43,9 +43,27 @@ class Inventory:
             log.log(f"Item with id {item_id} not found in {item_get}s", 4)
             return
 
-        # Zawsze dodaj nowy przedmiot z quantity=1, nawet jeśli już istnieje w inventory
+        # Jeśli już jest w inventory, zwiększ quantity
+        for item in self.items:
+            item_id_val = item['id'] if isinstance(item, dict) else item.id
+            if item_id_val == przedmiot.id:
+                # obsłuż quantity/m_quantity dla dict i obiektu
+                if isinstance(item, dict):
+                    if item['quantity'] < item['m_quantity']:
+                        item['quantity'] += 1
+                        log.log(f"{item['name']} quantity increased to {item['quantity']}/{item['m_quantity']}", 4)
+                    else:
+                        log.log(f"Cannot add {item['name']}, max quantity reached", 4)
+                else:
+                    if item.quantity < item.m_quantity:
+                        item.quantity += 1
+                        log.log(f"{item.name} quantity increased to {item.quantity}/{item.m_quantity}", 4)
+                    else:
+                        log.log(f"Cannot add {item.name}, max quantity reached", 4)
+                return
+        # Jeśli nie ma, dodaj z quantity=1
         przedmiot.quantity = 1
-        log.log(f"{przedmiot.name} added to inventory (pending merge)", 4)
+        log.log(f"{przedmiot.name} added to inventory", 4)
         self.items.append(przedmiot)
 
     def remove_item(self, item):

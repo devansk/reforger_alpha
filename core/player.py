@@ -84,57 +84,10 @@ class Player:
         else:
             inventory_data = str(self.inventory)
 
-        prev_items = getattr(Player, '_loaded_inventory_items', [])
-        new_items = inventory_data.get('items', [])
-        def get_key(item):
-            if isinstance(item, dict):
-                return (item.get('id'), item.get('name'))
-            else:
-                return (getattr(item, 'id', None), getattr(item, 'name', None))
-        prev_keys = {get_key(item) for item in prev_items}
-        # Zlicz tylko nowe przedmioty (nieobecne w prev_items)
-        new_qty = {}
-        new_mqty = {}
-        for item in new_items:
-            key = get_key(item)
-            if key not in prev_keys:
-                qty = item.get('quantity', 1) if isinstance(item, dict) else getattr(item, 'quantity', 1)
-                new_qty[key] = new_qty.get(key, 0) + qty
-                if isinstance(item, dict):
-                    new_mqty[key] = item.get('m_quantity', 1)
-                else:
-                    new_mqty[key] = getattr(item, 'm_quantity', 1)
-
-        # Build dict: key -> item dict (with quantity)
-        merged = {}
-        for item in prev_items:
-            key = get_key(item)
-            if isinstance(item, dict):
-                merged[key] = item.copy()
-            else:
-                merged[key] = item.__dict__.copy() if hasattr(item, '__dict__') else dict(item)
-        for key, add_qty in new_qty.items():
-            if key in merged:
-                merged_item = merged[key]
-                prev_qty = merged_item.get('quantity', 1)
-                max_qty = new_mqty.get(key, merged_item.get('m_quantity', 1))
-                merged_item['quantity'] = min(prev_qty + add_qty, max_qty)
-                merged_item['m_quantity'] = max_qty
-            else:
-                # znajdź przykładowy item z new_items o tym kluczu
-                for item in new_items:
-                    if get_key(item) == key:
-                        new_item = item.copy() if isinstance(item, dict) else (item.__dict__.copy() if hasattr(item, '__dict__') else dict(item))
-                        new_item['quantity'] = min(add_qty, new_mqty.get(key, 1))
-                        new_item['m_quantity'] = new_mqty.get(key, 1)
-                        merged[key] = new_item
-                        break
-        combined = list(merged.values())
         with open(inventory_file, 'w', encoding='utf-8') as f:
-            json.dump({'items': combined}, f, ensure_ascii=False, indent=4)
-        # Update loaded inventory for next save
-        Player._loaded_inventory_items = combined
-        log.log(f"Player state saved to {filename} and inventory merged in {inventory_file}", 1)
+            json.dump(inventory_data, f, ensure_ascii=False, indent=4)
+        Player._loaded_inventory_items = inventory_data.get('items', [])
+        log.log(f"Player state saved to {filename} and inventory saved in {inventory_file}", 1)
 
     # def load_from_file(self, filename='data/player_save.json'):
     #     import json
