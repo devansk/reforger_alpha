@@ -18,6 +18,8 @@ class Weapon:
         self.critical_chance = data.get('critical_chance')
         self.durability = data.get('durability')
         self.quantity = data.get('quantity')
+        self.m_quantity = data.get('m_quantity', 1)
+
     def __repr__(self):
         return f"Weapon(id={self.id}, name='{self.name}')"
 
@@ -32,6 +34,8 @@ class Shield:
         self.hp_max = data.get('hp')
         self.durability = data.get('durability')
         self.quantity = data.get('quantity')
+        self.m_quantity = data.get('m_quantity', 1)
+
     def __repr__(self):
         return f"Shield(id={self.id}, name='{self.name}')"
 
@@ -44,6 +48,9 @@ class Potion:
         self.hp = data.get('hp')
         self.durability = data.get('durability')
         self.quantity = data.get('quantity')
+        self.m_quantity = data.get('m_quantity', 1)
+        self.required_level = data.get('required_level', 1)  # Default to level 1 if not specified
+        
 
     def get_hp(self):
         return self.hp
@@ -68,6 +75,7 @@ class Drop:
         self.durability = data.get('durability')
         self.quantity = data.get('quantity')
         self.attack = data.get('attack')
+        self.m_quantity = data.get('m_quantity', 1)
     def __repr__(self):
         return f"Item(id={self.id}, name='{self.name}')"        
         

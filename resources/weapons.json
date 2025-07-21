@@ -8,6 +8,7 @@
     "attack": 25,
     "critical_chance": 0.15,
     "durability": 100,
-    "quantity": 1
+    "quantity": 1,
+    "m_quantity": 32
   }
 ]

@@ -7,7 +7,8 @@
     "required_level": 1,
     "hp": 15,
     "durability": 1,
-    "quantity": 1
+    "quantity": 1,
+    "m_quantity": 32
   },
   {
     "id": 2,
@@ -15,7 +16,8 @@
     "description": "A small leathar purse of money. (+25 gold)",
     "price": 25,
     "required_level": 1,
-    "quantity": 1
+    "quantity": 1,
+    "m_quantity": 32
   },
   {
     "id": 3,
@@ -23,6 +25,7 @@
     "description": "Rabbit leather of questionable quality",
     "price": 50,
     "required_level": 1,
-    "quantity": 1
+    "quantity": 1,
+    "m_quantity": 32
   }
 ]

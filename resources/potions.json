@@ -7,6 +7,7 @@
     "required_level": 1,
     "hp": 15,
     "durability": 1,
-    "quantity": 1
+    "quantity": 1,
+    "m_quantity": 32
   }
 ]

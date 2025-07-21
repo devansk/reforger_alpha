@@ -14,30 +14,18 @@
             "attack": null
         },
         {
-            "id": 2,
-            "name": "[s] Purse of money",
-            "description": "A small leathar purse of money. (+25 gold)",
-            "price": 25,
+            "id": 1,
+            "name": "[s] Health Potion",
+            "description": "A small health potion. (+15HP)",
+            "price": 5,
             "required_level": 1,
             "defense": null,
-            "hp": null,
+            "hp": 15,
             "hp_max": null,
-            "durability": null,
+            "durability": 1,
             "quantity": 1,
-            "attack": null
-        },
-        {
-            "id": 2,
-            "name": "[s] Purse of money",
-            "description": "A small leathar purse of money. (+25 gold)",
-            "price": 25,
-            "required_level": 1,
-            "defense": null,
-            "hp": null,
-            "hp_max": null,
-            "durability": null,
-            "quantity": 1,
-            "attack": null
+            "attack": null,
+            "m_quantity": 32
         },
         {
             "id": 3,
@@ -50,7 +38,8 @@
             "hp_max": null,
             "durability": null,
             "quantity": 1,
-            "attack": null
+            "attack": null,
+            "m_quantity": 32
         }
     ]
 }
