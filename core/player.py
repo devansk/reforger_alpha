@@ -39,6 +39,7 @@ class Player:
             inventory = Inventory.from_dict(inventory_data)
         else:
             inventory = Inventory()
+        log.log(f"Player state loaded from {player_file} and inventory from {inventory_file}", 10)
         return cls(
             name=data.get('name', "Steve"),
             health=data.get('health', 100),
@@ -95,8 +96,8 @@ class Player:
             with open(inventory_file, 'w', encoding='utf-8') as f:
                 json.dump(existing_data, f, ensure_ascii=False, indent=4)
         except Exception as e:
-            log.log(f"Inventory append error: {e}", 1)
-        log.log(f"Player state saved to {filename} and inventory appended to {inventory_file}", 1)
+            log.log(f"Inventory append error: {e}", 10)
+        log.log(f"Player state saved to {filename} and inventory appended to {inventory_file}", 10)
 
     # def load_from_file(self, filename='data/player_save.json'):
     #     import json
@@ -130,8 +131,8 @@ class Player:
         self.attack = attack
         self.defense = defense
         self.damage = int(self.attack*0.75)
-        log.log(f"Player {self.name} created with {self.health} health, level {self.level}, and {self.balance} balance.", 1)
-        self.critical_hit_chance = critical_hit_chance   
+        self.critical_hit_chance = critical_hit_chance 
+        # log.log(f"Player {self.name} created with {self.health} health, level {self.level}, and {self.balance} balance.", 1)  
 
     def __str__(self):
         return f"Name: {self.name}\nLevel: {self.level}\nExperience: {self.experience}/{self.experience_need}\nMoney: {self.balance}\nHealth: {self.health}/{self.health_max}\nAttack: {self.attack}\nDefense: {self.defense}\nDamage: {self.damage}"

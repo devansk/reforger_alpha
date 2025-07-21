@@ -24,6 +24,8 @@ class Inventory:
     def __init__(self):
         self.items = []
 
+#jeśli item_po_id jest w eq to dodaj quantity danego itema, max 32
+#dodać max quantity do itemów
     def add_item(self, item_id,item_get):
         if item_get == 'drop':
             self.items.append(itemz_list.get_drop_by_id(item_id))

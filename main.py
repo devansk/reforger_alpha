@@ -34,7 +34,12 @@ log.log("Game started", 0)
 if __name__ == "__main__":
     # Example usage of Player class
     #player = Player(name="Hero", health=150, level=1, experience=0, balance=200)
-    player = Player.load_from_file()
+    try:
+        player = Player.load_from_file()
+    except:
+        player = Player(name="Hero", health=150, level=1, experience=0, balance=200)
+        log.log("Player save file not found", 10)
+    
 
     
 

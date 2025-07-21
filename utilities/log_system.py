@@ -41,6 +41,8 @@ class LogSystem:
             log_type = "[Shop]"
         elif id == 9:
             log_type = "[Print]"
+        elif id == 10:
+            log_type = "[Save]"
         else:
             log_type = "[Unknown]"
         czas = datetime.now().strftime("[%H:%M][%d.%m.%Y]")

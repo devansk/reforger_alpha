@@ -25,6 +25,32 @@
             "durability": null,
             "quantity": 1,
             "attack": null
+        },
+        {
+            "id": 2,
+            "name": "[s] Purse of money",
+            "description": "A small leathar purse of money. (+25 gold)",
+            "price": 25,
+            "required_level": 1,
+            "defense": null,
+            "hp": null,
+            "hp_max": null,
+            "durability": null,
+            "quantity": 1,
+            "attack": null
+        },
+        {
+            "id": 3,
+            "name": "Rabbit Leather ",
+            "description": "Rabbit leather of questionable quality",
+            "price": 50,
+            "required_level": 1,
+            "defense": null,
+            "hp": null,
+            "hp_max": null,
+            "durability": null,
+            "quantity": 1,
+            "attack": null
         }
     ]
 }

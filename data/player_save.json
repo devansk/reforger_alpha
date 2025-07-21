@@ -1,9 +1,9 @@
 {
     "name": "Hero",
-    "health": 104,
-    "health_max": 112,
+    "health": 94,
+    "health_max": 104,
     "level": 1,
-    "experience": 5,
+    "experience": 6,
     "experience_need": 100,
     "balance": 200,
     "attack": 10,
