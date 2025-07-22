@@ -24,9 +24,9 @@ class Fight:
             hits += 1
             p_dmg = random.randint(player.get_damage()-2,player.get_damage()+2)
             p_dmg -= enemy.get_defense()
-            enemy.reduce_hp(p_dmg) #Cios gracza
 
-            if enemy.is_alive == False: 
+            enemy.reduce_hp(p_dmg) #Cios gracza
+            if enemy.is_alive == False:  #Sprawdzenie czy przeciwnik umarł
                 log.log(f"{enemy.get_name()} get killed by {player.get_name()} in {hits} hit(s)",2)
 
                 player.add_experience(enemy.get_xp())
@@ -39,7 +39,7 @@ class Fight:
                 break
 
             player.reduce_health(enemy.get_attack()) #Cios przeciwnika
-            if player.is_alive == False:
+            if player.is_alive == False: #Sprawdzenie czy gracz umarł
                 log.log(f"{player.get_name()} get killed by {enemy.get_name()} in {hits} hit(s)",1)
                 player.set_experience(0)
                 log.log(f"{self.get_name()} died and lost all exp",1)

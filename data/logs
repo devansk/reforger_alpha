@@ -89,3 +89,19 @@
 [Monster][22:39][21.07.2025] - Item drops from Friendly Rabbit
 [Inventory][22:39][21.07.2025] - Rabbit Leather  quantity increased to 3/32
 [Player][22:39][21.07.2025] - Player state saved to data/player_save.json and inventory saved in data/player_inventory.json
+
+[Monster][22:42][21.07.2025] - Monster found by id 1: Friendly Rabbit
+[Monster][22:42][21.07.2025] - Friendly Rabbit get killed by Hero in 5 hit(s)
+[General][22:42][21.07.2025] - Hero get +1xp | [57/100]
+[Monster][22:42][21.07.2025] - Item drops from Friendly Rabbit
+[Inventory][22:42][21.07.2025] - [s] Purse of money quantity increased to 2/32
+[Player][22:42][21.07.2025] - Player state saved to data/player_save.json and inventory saved in data/player_inventory.json
+
+[Monster][22:22][22.07.2025] - Monster found by id 1: Friendly Rabbit
+[Monster][22:22][22.07.2025] - Friendly Rabbit get killed by Hero in 6 hit(s)
+[General][22:22][22.07.2025] - Hero get +10xp | [67/100]
+[Monster][22:22][22.07.2025] - Item drops from Friendly Rabbit
+[Inventory][22:22][22.07.2025] - [s] Health Potion added to inventory
+[Monster][22:22][22.07.2025] - Item drops from Friendly Rabbit
+[Inventory][22:22][22.07.2025] - [s] Purse of money quantity increased to 3/32
+[Player][22:22][22.07.2025] - Player state saved to data/player_save.json and inventory saved in data/player_inventory.json

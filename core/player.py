@@ -89,26 +89,7 @@ class Player:
         Player._loaded_inventory_items = inventory_data.get('items', [])
         log.log(f"Player state saved to {filename} and inventory saved in {inventory_file}", 1)
 
-    # def load_from_file(self, filename='data/player_save.json'):
-    #     import json
-    #     import os
-    #     if not os.path.exists(filename):
-    #         log.log(f"Save file {filename} not found.", 1)
-    #         return
-    #     with open(filename, 'r', encoding='utf-8') as f:
-    #         data = json.load(f)
-    #     self.name = data.get('name', self.name)
-    #     self.health = data.get('health', self.health)
-    #     self.health_max = data.get('health_max', self.health_max)
-    #     self.level = data.get('level', self.level)
-    #     self.experience = data.get('experience', self.experience)
-    #     self.experience_need = data.get('experience_need', self.experience_need)
-    #     self.balance = data.get('balance', self.balance)
-    #     self.attack = data.get('attack', self.attack)
-    #     self.defense = data.get('defense', self.defense)
-    #     self.damage = data.get('damage', self.damage)
-    #     self.critical_hit_chance = data.get('critical_hit_chance', self.critical_hit_chance)
-    #     log.log(f"Player state loaded from {filename}", 1)
+
     def __init__(self, inventory=None, name="Steve", health=100, level=1, experience=0, experience_need=100, balance=0, attack=10, defense=5, critical_hit_chance=0.1):
         self.name = name
         self.health = health

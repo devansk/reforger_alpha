@@ -1,0 +1,79 @@
+Stan na dzień 22.07.25r.
+The Reforger | ver_early_alpha
+autor: devansk
+
+==============---================
+-----=====|Co zawiera?|=====-----
+==============---================
+
+🔶 🧙 klasa Player:
+    ✔️ ekwipunek
+    ✔️ ekwipunek_na_sobie = BRAK
+    ✔️ statystyki: hp, obrona, atak, crit, monety
+    ✔️ zdobywanie doswiadczenia (xp)
+    ✔️ levelowanie postaci (lvl)
+    ✔️ obsługuje fight.py
+    ✔️ umięjetności = BRAK
+    ✔️ zapis oraz odczyt z pliku: player_inventory, player_save
+
+ ➕️ Do dodania:
+    🔹 obsluga crit podczas zwracania player.damage
+    🔹 bardziej złożony system doświadczenia
+    🔹 umięjetności do walki/ um. pasywne do zbierania minerałów etc.
+    🔹 speed attack do statystyk
+
+.
+.
+.
+
+🔶 👾 klasa Monster:
+    ✔️ statystyki: hp, obrona, atak, xp, drop, drop_rate = d_chance
+    ✔️ obsługuje fight.py
+    ✔️ losowanie przeciwnika (resources/monsters.py)
+    ✔️ drop itemów po śmierci (resources/drop.py)
+
+ ➕️ Do dodania:
+    🔹 uaktualnić funkcje drop o szanse na drop z danego przedmiotu - item.drop_chance
+
+.
+.
+.
+
+🔶 🎒 klasa Inventory:
+    ✔️ obsluguje typowe operacje jak dodaj/usun przedmiot
+    ✔️ zlicza quantity do m_quantity = max(1-32), przez co nie dodaje kolejnych obiektow tego samego typu
+    ✔️ zapis/odczyt z pliku
+    ✔️ obsługa sklepu (kupno/sprzedaż) = BRAK
+
+ ➕️ Do dodania:
+    🔹 usprawnic quantity tak aby po maxie dawalo mozliwosc nastepnego stackowania danego przedmiotu
+    🔹 funkcja usun_po_id; rozbudowac item.remove o ILOSC przedmiotow do usuniecia
+    🔹 ekwipunek obsluguje wyrzucanie oraz sprzedawanie itemow
+    🔹 ekwipunek na sobie ktory dodaje bonusy z ubranych przedmiotow do statystyk gracza
+.
+.
+.
+
+🔶 🏺 klasa Items:
+    ✔️ obsługuje wszystkie przedmioty (weapons,shields,potions,drop)
+    ✔️ obsłguje dodatkowe funkcje np. ulecz dla potions
+    ✔️ odczyt z plików (resources/drop-potions-weapons-shields)
+    
+ ➕️ Do dodania:
+    🔹 rozszerzyć dodatkowe funckje
+    🔹 dodać więcej przedmiotów oraz ich typów
+
+.
+.
+.
+
+🔶 🏺 klasa Fight:
+    ✔️ obsługuje walke pomiedzy graczem a potworem
+    ✔️ umożliwia drop przedmiotow
+    ✔️ resetuje xp gracza po jego śmierci
+    ✔️ dodaje xp po zabiciu przeciwnika
+
+    
+ ➕️ Do dodania:
+    🔹 bardziej zaawansowany system walki
+    🔹 możliwość ucieczki
