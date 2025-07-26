@@ -1,5 +1,14 @@
 # The Reforger | ver_early_alpha
 
+# Last update .alpha2607250
+- dodano "[Fight]" do log_system.py
+- poprawiono wyglad wyswietlania logów
+- dodano obsługe krytycznego trafienia w player.py:
+   *get_damage() - updated
+   *roll_crit() - new
+- dodano plik README
+
+
 Autor: devansk
 
 ## Opis
@@ -17,7 +26,7 @@ The Reforger to tekstowy RPG w Pythonie, rozwijany w stylu klasycznych gier sing
 - Zapis/odczyt stanu gracza i ekwipunku
 
 #### Do dodania
-- Obsługa crit podczas zwracania player.damage
+- [NIEDAWNO DODANE] Obsługa crit podczas zwracania player.damage
 - Bardziej złożony system doświadczenia
 - Umiejętności do walki / pasywne do zbierania
 - Speed attack do statystyk
@@ -32,7 +41,8 @@ The Reforger to tekstowy RPG w Pythonie, rozwijany w stylu klasycznych gier sing
 
 #### Do dodania
 - Uaktualnić funkcję drop o szanse na drop z danego przedmiotu (item.drop_chance)
-
+- Level up po 20 zabójstwach + atak, + hp + obrona +xp (milestones)
+- Licznik śmierci danej bestii
 ---
 
 ### 🔶 🎒 Klasa Inventory

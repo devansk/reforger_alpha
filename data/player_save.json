@@ -2,12 +2,12 @@
     "name": "Hero",
     "health": 0,
     "health_max": 0,
-    "level": 1,
-    "experience": 67,
-    "experience_need": 100,
+    "level": 2,
+    "experience": 77,
+    "experience_need": 200,
     "balance": 200,
     "attack": 10,
     "defense": 5,
     "damage": 7,
-    "critical_hit_chance": 0.1
+    "critical_hit_chance": 0.5
 }

@@ -10,7 +10,7 @@
             "hp": null,
             "hp_max": null,
             "durability": null,
-            "quantity": 3,
+            "quantity": 6,
             "attack": null,
             "m_quantity": 32
         },
@@ -24,7 +24,7 @@
             "hp": null,
             "hp_max": null,
             "durability": null,
-            "quantity": 3,
+            "quantity": 8,
             "attack": null,
             "m_quantity": 32
         },
@@ -38,7 +38,7 @@
             "hp": 15,
             "hp_max": null,
             "durability": 1,
-            "quantity": 1,
+            "quantity": 4,
             "attack": null,
             "m_quantity": 32
         }

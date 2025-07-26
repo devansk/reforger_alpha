@@ -43,10 +43,12 @@ class LogSystem:
             log_type = "[Print]"
         elif id == 10:
             log_type = "[Save]"
+        elif id == 11:
+            log_type = "[Fight]"
         else:
             log_type = "[Unknown]"
         czas = datetime.now().strftime("[%H:%M][%d.%m.%Y]")
-        entry = f"{log_type}{czas} - {message}"
+        entry = f"{czas}{log_type} - {message}"
         self.logs.append(entry)
         self.save_logs()
 

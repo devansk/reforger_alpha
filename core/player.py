@@ -90,7 +90,7 @@ class Player:
         log.log(f"Player state saved to {filename} and inventory saved in {inventory_file}", 1)
 
 
-    def __init__(self, inventory=None, name="Steve", health=100, level=1, experience=0, experience_need=100, balance=0, attack=10, defense=5, critical_hit_chance=0.1):
+    def __init__(self, inventory=None, name="Steve", health=100, level=1, experience=0, experience_need=100, balance=0, attack=10, defense=5, critical_hit_chance=1):
         self.name = name
         self.health = health
         self.health_max = health  # Maximum health
@@ -123,10 +123,7 @@ class Player:
             raise ValueError("Name cannot be 'admin'.")
         
         self.name = name
-#DAMAGE
-    #update:
-    def get_damage(self):
-        return self.damage
+
 #HEALTH
     #update:
     def get_health(self):
@@ -158,7 +155,7 @@ class Player:
             self.health = self.health_max
 
 #LEVEL
-    #update: - this section is updated to include health max increase on level up
+    #update: - poprawiono literowke w wyswietlaniu log w level_up()
     def get_level(self):
         return self.level
     def add_level(self, levels=1):
@@ -179,7 +176,7 @@ class Player:
         self.add_health_max(10*self.get_level())  # Increase max health on level up
         log.log(f"{self.name}'s max health increased to {self.health_max}.", 1)
         self.set_health(self.health_max)  # Restore health to max on level up
-        log.log(f"{self.name}'s health restored to max ({self.health}).", 1)
+        log.log(f"{self.name}'s health restored to max ({self.health_max}).", 1)
 
 #EXPERIENCE
     #update:
@@ -235,8 +232,18 @@ class Player:
         self.attack -= amount
         if self.attack < 0:
             self.attack = 1
+#DAMAGE
+    #update: - dodano losowanie obrażeń + losowanie krytcznego trafienia
+    def get_damage(self):
+        import random
+        dmg_value = self.damage
+        dmg = random.randint(dmg_value-2,dmg_value+2)
+        crit = self.roll_crit()
+        if crit:
+            dmg += crit
+        return dmg
 #CRITICAL HIT CHANCE
-    #update:
+    #update: - dodano roll_crit() + obsługe log
     def get_critical_hit_chance(self):
         return self.critical_hit_chance
     def set_critical_hit_chance(self, chance):
@@ -246,7 +253,19 @@ class Player:
     def reduce_critical_hit_chance(self, amount):
         self.critical_hit_chance -= amount
         if self.critical_hit_chance < 0:
-            self.critical_hit_chance = 0.1
+            self.critical_hit_chance = 10
+    def roll_crit(self):
+        import random
+        log.log(f"{self.name} is rolling for a critical hit with {self.critical_hit_chance}% chance.", 1)
+        crit_yes_no = random.randint(1, 100) <= self.critical_hit_chance*100
+        if crit_yes_no:
+            random_dmg = random.randint(3, 70)/10
+            additional_dmg = int(self.damage * random_dmg)  # 30%-70% more damage on crit
+            log.log(f"{self.name} landed a critical hit! [+{additional_dmg} dmg]", 1)
+            return additional_dmg
+        return 0
+            
+
 
 #DEFENSE
     #update:
